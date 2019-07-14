@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:ignore="HardcodedText">
+
+    <item
+        android:id="@+id/nav_word"
+        android:icon="@drawable/ic_word_new"
+        android:title="คำศัพท์"/>
+    <item
+        android:id="@+id/nav_sentence"
+        android:icon="@drawable/ic_sentence_new"
+        android:title="สนทนา"/>
+    <item
+        android:id="@+id/nav_history"
+        android:icon="@drawable/ic_history_new"
+        android:title="ล่าสุด"/>
+    <item
+        android:id="@+id/nav_slang"
+        android:icon="@drawable/ic_slang_new"
+        android:title="คำแสลง"/>
+
+</menu>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_2_w800"
+    tools:context=".DashBoardActivity"
+    tools:ignore="HardcodedText,ContentDescription,NewApi,UnusedAttribute">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#a0ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/word_image_view"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/sentence_image_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_edit_text"
+        app:layout_constraintVertical_bias="0.40"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/ic_word_new" />
+
+    <ImageView
+        android:id="@+id/sentence_image_view"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/slang_image_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/word_image_view"
+        app:layout_constraintTop_toTopOf="@+id/word_image_view"
+        app:srcCompat="@drawable/ic_sentence_new" />
+
+    <ImageView
+        android:id="@+id/slang_image_view"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sentence_image_view"
+        app:layout_constraintTop_toTopOf="@+id/sentence_image_view"
+        app:srcCompat="@drawable/ic_slang_new" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/IconLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="คำศัพท์"
+        app:layout_constraintBottom_toTopOf="@+id/history_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/word_image_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/word_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/word_image_view" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/IconLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="สนทนา"
+        app:layout_constraintEnd_toEndOf="@+id/sentence_image_view"
+        app:layout_constraintStart_toStartOf="@+id/sentence_image_view"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/IconLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="คำแสลง"
+        app:layout_constraintEnd_toEndOf="@+id/slang_image_view"
+        app:layout_constraintStart_toStartOf="@+id/slang_image_view"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <ImageView
+        android:id="@+id/about_image_view"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/history_image_view"
+        app:layout_constraintTop_toTopOf="@+id/history_image_view"
+        app:srcCompat="@drawable/ic_about_new" />
+
+    <ImageView
+        android:id="@+id/history_image_view"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toStartOf="@+id/about_image_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/ic_history_new" />
+
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/IconLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="ค้นหาบ่อย"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/history_image_view"
+        app:layout_constraintStart_toStartOf="@+id/history_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/history_image_view" />
+
+    <TextView
+        android:id="@+id/textView5"
+        style="@style/IconLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="เกี่ยวกับภาษาอีสาน"
+        app:layout_constraintEnd_toEndOf="@+id/about_image_view"
+        app:layout_constraintStart_toStartOf="@+id/about_image_view"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/bg_button"
+        android:drawableEnd="@drawable/ic_search"
+        android:drawableRight="@drawable/ic_search"
+        android:fontFamily="@font/db_heavent_light"
+        android:foreground="?attr/selectableItemBackground"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view" />
+
+</android.support.constraint.ConstraintLayout>
