@@ -161,7 +161,7 @@
         style="@style/IconLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="เกี่ยวกับภาษาอีสาน"
+        android:text="เกี่ยวกับภาคอีสาน"
         app:layout_constraintEnd_toEndOf="@+id/about_image_view"
         app:layout_constraintStart_toStartOf="@+id/about_image_view"
         app:layout_constraintTop_toTopOf="@+id/textView4" />
