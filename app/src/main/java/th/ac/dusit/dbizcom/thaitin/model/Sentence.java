@@ -4,26 +4,23 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Locale;
 
-public class Word {
+public class Sentence {
 
     @SerializedName("id")
     public final int id;
-    @SerializedName("word")
-    public final String word;
+    @SerializedName("sentence")
+    public final String sentence;
     @SerializedName("translation")
     public final String translation;
-    @SerializedName("category")
-    public final String category;
 
-    public Word(int id, String word, String translation, String category) {
+    public Sentence(int id, String sentence, String translation) {
         this.id = id;
-        this.word = word;
+        this.sentence = sentence;
         this.translation = translation;
-        this.category = category;
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "%s = %s", word, translation);
+        return String.format(Locale.getDefault(), "%s = %s", sentence, translation);
     }
 }

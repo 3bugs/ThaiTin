@@ -15,6 +15,7 @@ public class BaseFragment extends Fragment {
 
     private static final String TAG = BaseFragment.class.getName();
     protected String mTitle = "หัวเรื่อง";
+    protected boolean mTabsVisible = false;
 
     protected BaseFragmentListener mListener;
 
@@ -33,6 +34,7 @@ public class BaseFragment extends Fragment {
 
         if (mListener != null) {
             mListener.setTitle(mTitle);
+            mListener.setTabsVisible(mTabsVisible);
         }
     }
 
@@ -55,5 +57,7 @@ public class BaseFragment extends Fragment {
 
     public interface BaseFragmentListener {
         void setTitle(String title);
+
+        void setTabsVisible(boolean visible);
     }
 }

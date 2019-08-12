@@ -1,26 +1,35 @@
 package th.ac.dusit.dbizcom.thaitin;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import th.ac.dusit.dbizcom.thaitin.etc.Utils;
 import th.ac.dusit.dbizcom.thaitin.fragment.AboutFragment;
 import th.ac.dusit.dbizcom.thaitin.fragment.BaseFragment;
 import th.ac.dusit.dbizcom.thaitin.fragment.HistoryFragment;
 import th.ac.dusit.dbizcom.thaitin.fragment.SentenceFragment;
 import th.ac.dusit.dbizcom.thaitin.fragment.SlangFragment;
 import th.ac.dusit.dbizcom.thaitin.fragment.WordFragment;
+import th.ac.dusit.dbizcom.thaitin.fragment.WordListFragment;
+import th.ac.dusit.dbizcom.thaitin.model.Sentence;
+import th.ac.dusit.dbizcom.thaitin.model.Word;
 
 public class MainActivity extends AppCompatActivity implements
-        BaseFragment.BaseFragmentListener {
+        BaseFragment.BaseFragmentListener,
+        WordListFragment.WordListFragmentListener,
+        SentenceFragment.SentenceFragmentListener {
 
     private static final String TAg = MainActivity.class.getName();
 
@@ -36,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements
 
     protected enum FragmentTransitionType {
         NONE,
-        SLIDE;
+        SLIDE,
+        FADE
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -52,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements
                             new WordFragment(),
                             TAG_FRAGMENT_WORD,
                             false,
-                            FragmentTransitionType.NONE
+                            FragmentTransitionType.FADE
                     );
                     return true;
                 case R.id.nav_sentence:
@@ -60,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements
                             new SentenceFragment(),
                             TAG_FRAGMENT_SENTENCE,
                             false,
-                            FragmentTransitionType.NONE
+                            FragmentTransitionType.FADE
                     );
                     return true;
                 case R.id.nav_history:
@@ -68,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements
                             new HistoryFragment(),
                             TAG_FRAGMENT_HISTORY,
                             false,
-                            FragmentTransitionType.NONE
+                            FragmentTransitionType.FADE
                     );
                     return true;
                 case R.id.nav_slang:
@@ -76,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements
                             new SlangFragment(),
                             TAG_FRAGMENT_SLANG,
                             false,
-                            FragmentTransitionType.NONE
+                            FragmentTransitionType.FADE
                     );
                     return true;
             }
@@ -89,7 +99,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTitleTextView = findViewById(R.id.title_text_view);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+
+        mTitleTextView = toolbar.findViewById(R.id.title_text_view);
         mNavView = findViewById(R.id.nav_view);
         mNavView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -150,6 +163,13 @@ public class MainActivity extends AppCompatActivity implements
                     R.anim.enter_from_left,
                     R.anim.exit_to_right
             );
+        } else if (transitionType == FragmentTransitionType.FADE) {
+            transaction.setCustomAnimations(
+                    R.anim.fade_in,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.fade_out
+            );
         }
         transaction.replace(
                 R.id.fragment_container,
@@ -177,6 +197,29 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void setTitle(String title) {
+        /*ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+        }*/
         mTitleTextView.setText(title);
+    }
+
+    @Override
+    public void setTabsVisible(boolean visible) {
+        findViewById(R.id.tab_layout).setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    public TabLayout getTabLayout() {
+        return findViewById(R.id.tab_layout);
+    }
+
+    @Override
+    public void onClickWord(Word word) {
+        Utils.showShortToast(MainActivity.this, word.toString());
+    }
+
+    @Override
+    public void onClickSentence(Sentence sentence) {
+        Utils.showShortToast(MainActivity.this, sentence.toString());
     }
 }

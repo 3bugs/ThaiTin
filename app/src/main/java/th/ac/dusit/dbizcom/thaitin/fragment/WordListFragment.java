@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -12,88 +13,62 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.List;
+import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Retrofit;
 import th.ac.dusit.dbizcom.thaitin.R;
-import th.ac.dusit.dbizcom.thaitin.etc.Utils;
-import th.ac.dusit.dbizcom.thaitin.model.Sentence;
-import th.ac.dusit.dbizcom.thaitin.net.ApiClient;
-import th.ac.dusit.dbizcom.thaitin.net.GetSentenceResponse;
-import th.ac.dusit.dbizcom.thaitin.net.MyRetrofitCallback;
-import th.ac.dusit.dbizcom.thaitin.net.WebServices;
+import th.ac.dusit.dbizcom.thaitin.model.Word;
+import th.ac.dusit.dbizcom.thaitin.model.WordCategory;
 
-public class SentenceFragment extends BaseFragment {
+public class WordListFragment extends Fragment {
 
-    private static final String TAG = SentenceFragment.class.getName();
+    private static final String TAG = WordListFragment.class.getName();
+    private static final String ARG_WORD_CATEGORY_JSON = "word_category_json";
 
-    private ProgressBar mProgressBar;
+    private WordCategory mWordCategory;
+    private WordListFragmentListener mListener;
 
-    private List<Sentence> mSentenceList = null;
-    private SentenceFragmentListener mListener;
-
-    public SentenceFragment() {
+    public WordListFragment() {
         // Required empty public constructor
-        mTitle = "สนทนา";
+    }
+
+    public static WordListFragment newInstance(WordCategory wordCategory) {
+        WordListFragment fragment = new WordListFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_WORD_CATEGORY_JSON, new Gson().toJson(wordCategory));
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            String wordCategoryJson = getArguments().getString(ARG_WORD_CATEGORY_JSON);
+            mWordCategory = new Gson().fromJson(wordCategoryJson, WordCategory.class);
+        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sentence, container, false);
+        return inflater.inflate(R.layout.fragment_word_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mProgressBar = view.findViewById(R.id.progress_bar);
-        if (mSentenceList == null) {
-            doGetSentence(view);
-        } else {
-            setupRecyclerView(view);
-        }
-    }
+        //Utils.showShortToast(view.getContext(), String.valueOf(mWordCategory.wordList.size()));
 
-    private void doGetSentence(final View view) {
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        Retrofit retrofit = ApiClient.getClient();
-        WebServices services = retrofit.create(WebServices.class);
-
-        Call<GetSentenceResponse> call = services.getSentence();
-        call.enqueue(new MyRetrofitCallback<>(
-                getActivity(),
-                null,
-                mProgressBar,
-                new MyRetrofitCallback.MyRetrofitCallbackListener<GetSentenceResponse>() {
-                    @Override
-                    public void onSuccess(GetSentenceResponse responseBody) {
-                        mSentenceList = responseBody.sentenceList;
-                        setupRecyclerView(view);
-                    }
-
-                    @Override
-                    public void onError(String errorMessage) {
-                        Utils.showOkDialog(
-                                getActivity(),
-                                "Error",
-                                errorMessage
-                        );
-                    }
-                }
-        ));
-    }
-
-    private void setupRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        SentenceListAdapter adapter = new SentenceListAdapter(
+        WordListAdapter adapter = new WordListAdapter(
                 view.getContext(),
-                mSentenceList,
+                mWordCategory.wordList,
                 mListener
         );
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -101,19 +76,36 @@ public class SentenceFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
     }
 
-    public interface SentenceFragmentListener {
-        void onClickSentence(Sentence sentence);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof WordListFragmentListener) {
+            mListener = (WordListFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement WordListFragmentListener");
+        }
     }
 
-    private static class SentenceListAdapter extends RecyclerView.Adapter<SentenceListAdapter.ViewHolder> {
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface WordListFragmentListener {
+        void onClickWord(Word word);
+    }
+
+    private static class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.ViewHolder> {
 
         private final Context mContext;
-        private final List<Sentence> mSentenceList;
-        private final SentenceFragmentListener mListener;
+        private final List<Word> mWordList;
+        private final WordListFragmentListener mListener;
 
-        SentenceListAdapter(Context context, List<Sentence> sentenceList, SentenceFragmentListener listener) {
+        WordListAdapter(Context context, List<Word> wordList, WordListFragmentListener listener) {
             mContext = context;
-            mSentenceList = sentenceList;
+            mWordList = wordList;
             mListener = listener;
         }
 
@@ -121,47 +113,55 @@ public class SentenceFragment extends BaseFragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.item_sentence, parent, false
+                    R.layout.item_word, parent, false
             );
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            final Sentence sentence = mSentenceList.get(position);
+            final Word word = mWordList.get(position);
 
-            holder.mSentence = sentence;
-            holder.mSentenceTextView.setText(sentence.sentence);
-            holder.mTranslationTextView.setText(sentence.translation);
+            holder.mWord = word;
+            holder.mWordTextView.setText(word.word);
+            holder.mTranslationTextView.setText(word.translation);
 
-            //int rowBgColorRes = position % 2 == 0 ? R.color.row_light_background : R.color.row_dark_background;
-            //holder.mRootView.setBackgroundResource(rowBgColorRes);
+            int rowBgColorRes = position % 2 == 0 ? R.color.row_light_background : R.color.row_dark_background;
+            holder.mRootView.setBackgroundResource(rowBgColorRes);
+        }
+
+        private String formatThaiDate(String dateString) {
+            String[] datePart = dateString.split("-");
+            String day = datePart[2];
+            String month = datePart[1];
+            String year = String.valueOf(Integer.parseInt(datePart[0]) + 543).substring(2);
+            return String.format(Locale.getDefault(), "%s/%s/%s", day, month, year);
         }
 
         @Override
         public int getItemCount() {
-            return mSentenceList.size();
+            return mWordList.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
             private final View mRootView;
-            private final TextView mSentenceTextView;
+            private final TextView mWordTextView;
             private final TextView mTranslationTextView;
 
-            private Sentence mSentence;
+            private Word mWord;
 
             ViewHolder(View itemView) {
                 super(itemView);
 
                 mRootView = itemView;
-                mSentenceTextView = itemView.findViewById(R.id.sentence_text_view);
+                mWordTextView = itemView.findViewById(R.id.word_text_view);
                 mTranslationTextView = itemView.findViewById(R.id.translation_text_view);
 
                 mRootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mListener.onClickSentence(mSentence);
+                        mListener.onClickWord(mWord);
                     }
                 });
             }
@@ -170,7 +170,7 @@ public class SentenceFragment extends BaseFragment {
 
     public class SpacingDecoration extends RecyclerView.ItemDecoration {
 
-        private final static int MARGIN_TOP_IN_DP = 8;
+        private final static int MARGIN_TOP_IN_DP = 0;
         private final static int MARGIN_BOTTOM_IN_DP = 16;
 
         private final int mMarginTop, mMarginBottom;
