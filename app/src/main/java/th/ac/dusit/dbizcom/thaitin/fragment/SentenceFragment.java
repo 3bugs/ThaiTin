@@ -101,6 +101,17 @@ public class SentenceFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SentenceFragmentListener) {
+            mListener = (SentenceFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement BaseFragmentListener");
+        }
+    }
+
     public interface SentenceFragmentListener {
         void onClickSentence(Sentence sentence);
     }
@@ -161,7 +172,9 @@ public class SentenceFragment extends BaseFragment {
                 mRootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mListener.onClickSentence(mSentence);
+                        if (mListener != null) {
+                            mListener.onClickSentence(mSentence);
+                        }
                     }
                 });
             }

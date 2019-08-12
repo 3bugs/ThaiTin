@@ -13,6 +13,10 @@ public interface WebServices {
     Call<GetSentenceResponse> getSentence(
     );
 
+    @GET("get_slang")
+    Call<GetSlangResponse> getSlang(
+    );
+
     /*@FormUrlEncoded
     @POST("get_feeding")
     Call<GetFeedingResponse> getFeedingByPond(

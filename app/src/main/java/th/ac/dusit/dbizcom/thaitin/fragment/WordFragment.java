@@ -38,7 +38,7 @@ public class WordFragment extends BaseFragment {
     public WordFragment() {
         // Required empty public constructor
         mTitle = "คำศัพท์";
-        mTabsVisible = true;
+        mTabsVisible = false;
     }
 
     @Override
@@ -104,6 +104,7 @@ public class WordFragment extends BaseFragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             activity.getTabLayout().setupWithViewPager(viewPager);
+            activity.getTabLayout().setVisibility(View.VISIBLE);
         }
     }
 

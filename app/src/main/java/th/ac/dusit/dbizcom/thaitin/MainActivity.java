@@ -24,12 +24,14 @@ import th.ac.dusit.dbizcom.thaitin.fragment.SlangFragment;
 import th.ac.dusit.dbizcom.thaitin.fragment.WordFragment;
 import th.ac.dusit.dbizcom.thaitin.fragment.WordListFragment;
 import th.ac.dusit.dbizcom.thaitin.model.Sentence;
+import th.ac.dusit.dbizcom.thaitin.model.Slang;
 import th.ac.dusit.dbizcom.thaitin.model.Word;
 
 public class MainActivity extends AppCompatActivity implements
         BaseFragment.BaseFragmentListener,
         WordListFragment.WordListFragmentListener,
-        SentenceFragment.SentenceFragmentListener {
+        SentenceFragment.SentenceFragmentListener,
+        SlangFragment.SlangFragmentListener {
 
     private static final String TAg = MainActivity.class.getName();
 
@@ -221,5 +223,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onClickSentence(Sentence sentence) {
         Utils.showShortToast(MainActivity.this, sentence.toString());
+    }
+
+    @Override
+    public void onClickSlang(Slang slang) {
+        Utils.showShortToast(MainActivity.this, slang.toString());
     }
 }

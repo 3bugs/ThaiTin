@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    tools:ignore="HardcodedText,UnusedAttribute">
+
+    <TextView
+        android:id="@+id/slang_text_view"
+        style="@style/TableRowTransparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="end"
+        android:paddingStart="0dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/vertical_divider"
+        app:layout_constraintEnd_toStartOf="@+id/compare_image_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="คำ" />
+
+    <ImageView
+        android:id="@+id/compare_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/vertical_divider"
+        app:layout_constraintEnd_toStartOf="@+id/translation_text_view"
+        app:layout_constraintStart_toEndOf="@+id/slang_text_view"
+        app:layout_constraintTop_toTopOf="@+id/translation_text_view"
+        app:srcCompat="@drawable/ic_compare" />
+
+    <TextView
+        android:id="@+id/translation_text_view"
+        style="@style/TableRowTransparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:gravity="start"
+        android:paddingStart="12dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/vertical_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/compare_image_view"
+        app:layout_constraintTop_toTopOf="@+id/slang_text_view"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="คำแปล" />
+
+    <View
+        android:id="@+id/vertical_divider"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:background="#aaaaaa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/translation_text_view"
+        app:layout_constraintStart_toStartOf="@+id/slang_text_view" />
+
+</android.support.constraint.ConstraintLayout>
