@@ -72,7 +72,9 @@ function doGetWord() {
             $category['title'] = $categoryTitle[$row['category']];
             $category['word_list'] = array();
 
-            $sql = "SELECT word, translation, category FROM thaitin_word WHERE category = '{$category['name']}'";
+            $sql = "SELECT word, translation, category FROM thaitin_word 
+                    WHERE category = '{$category['name']}' 
+                    ORDER BY word";
             if ($wordResult = $db->query($sql)) {
                 while ($wordRow = $wordResult->fetch_assoc()) {
                     $word = array();
@@ -106,7 +108,8 @@ function doGetWord() {
 function doGetSentence() {
     global $db, $response;
 
-    $sql = "SELECT sentence, translation FROM thaitin_sentence";
+    $sql = "SELECT sentence, translation FROM thaitin_sentence 
+            ORDER BY sentence";
     if ($result = $db->query($sql)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
         $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
@@ -133,7 +136,8 @@ function doGetSentence() {
 function doGetSlang() {
     global $db, $response;
 
-    $sql = "SELECT slang, translation FROM thaitin_slang";
+    $sql = "SELECT slang, translation FROM thaitin_slang 
+            ORDER BY slang";
     if ($result = $db->query($sql)) {
         $response[KEY_ERROR_CODE] = ERROR_CODE_SUCCESS;
         $response[KEY_ERROR_MESSAGE] = 'อ่านข้อมูลสำเร็จ';
